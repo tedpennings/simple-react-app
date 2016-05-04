@@ -19,14 +19,18 @@ export function login () {
       }
 
       componentDidMount () {
+        console.log(UIComponent.name, 'componentDidMount')
         this.authenticate(this.props)
       }
 
       authenticate = () => {
         const {token, githubAccessToken} = this.state
+        console.log(UIComponent.name, 'authenticate')
         const p = (token && githubAccessToken) ? ref.authWithCustomToken(token) : ref.authWithOAuthPopup('github')
+
         p.then((authData) => {
           const {token, github} = authData
+          console.log(UIComponent.name, 'authenticate promise resolved!', authData)
           const githubAccessToken = (github && github.accessToken) || localStorage.getItem('githubAccessToken')
           localStorage.setItem('token', token)
           localStorage.setItem('githubAccessToken', githubAccessToken)
